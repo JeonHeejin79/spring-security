@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Index</title>
+</head>
+<body>
+    <h1 th:text="${message}">Hello</h1>
+
+<!--    <div th:if="${#authorization.expr('isAuthenticated()')}">
+        <h2 th:text="${#authentication.name}"></h2>
+        <a href="/logout" th:href="@{/logout}">Logout</a>
+    </div>-->
+
+    <div sec:authorize-expr="isAuthenticated()">
+        <h2 sec:set="${#authentication.name}"></h2>
+        <a href="/logout" th:href="@{/logout}">Logout</a>
+    </div>
+
+<!--    <div th:unless="${#authorization.expr('isAuthenticated()')}">
+        <a href="/login" th:href="@{/login}">Login</a>
+    </div>-->
+
+    <div sec:authorize-expr="!${#authorization.expr('isAuthenticated()')}">
+        <a href="/login" th:href="@{/login}">Login</a>
+    </div>
+</body>
+</html>
